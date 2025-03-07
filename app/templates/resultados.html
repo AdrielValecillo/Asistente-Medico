@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Resultados del Análisis - Asistente Médico{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">Resultados del Análisis</h2>
+
+    <div class="card shadow p-4">
+        <!-- Contenido del análisis -->
+        <div class="analysis-content">
+            {{ resultado | safe }}
+        </div>
+
+        <div class="d-grid gap-2 mt-4">
+            <a href="/" class="btn btn-secondary">Volver a analizar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Estilos personalizados para mejorar la legibilidad -->
+<style>
+    /* Mejorar la legibilidad en dispositivos móviles */
+    .analysis-content {
+        font-size: 1rem; /* Tamaño de fuente adaptable */
+        line-height: 1.6; /* Espaciado entre líneas */
+        color: #333; /* Color de texto oscuro */
+    }
+
+    /* Encabezados */
+    .analysis-content h3 {
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        color: #0056b3; /* Azul suave para encabezados */
+    }
+
+    /* Listas */
+    .analysis-content ul {
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .analysis-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Resaltar valores importantes */
+    .highlight {
+        font-weight: bold;
+        color: #d9534f; /* Rojo suave para resaltar */
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .analysis-content {
+            font-size: 1rem; /* Reducir tamaño de fuente en móviles */
+        }
+
+        .analysis-content h3 {
+            font-size: 1.15rem;
+        }
+    }
+</style>
+{% endblock %}

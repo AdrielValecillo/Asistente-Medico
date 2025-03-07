@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Asistente Médico{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card shadow p-4" style="width: 100%; max-width: 800px;">
+        <h2 class="text-center mb-4">Análisis de Resultados Médicos</h2>
+        <p class="lead text-center mb-5">
+            Sube tus resultados médicos en formato PDF para obtener un análisis detallado.
+        </p>
+
+        <!-- Formulario con JavaScript para manejar la respuesta -->
+        <form id="uploadForm" enctype="multipart/form-data">
+            <div class="mb-3">
+                <input type="file" class="form-control form-control-lg" name="file" accept=".pdf" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Analizar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Loader y Overlay -->
+<div id="loaderOverlay" class="loader-overlay">
+    <div class="loading">
+        <svg height="48px" width="64px">
+            <polyline id="back" points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24"></polyline>
+            <polyline id="front" points="0.157 23.954, 14 23.954, 21.843 48, 43 0, 50 24, 64 24"></polyline>
+        </svg>
+    </div>
+</div>
+
+<!-- Estilos CSS -->
+<style>
+    /* Estilo del overlay */
+    .loader-overlay {
+        display: none; /* Oculto por defecto */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+        backdrop-filter: blur(5px); /* Efecto de desenfoque */
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Estilos del loader personalizado */
+    .loading svg polyline {
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .loading svg polyline#back {
+        fill: none;
+    }
+
+    .loading svg polyline#front {
+        fill: none;
+        stroke: #FF0000; /* Color rojo */
+        stroke-dasharray: 48, 144;
+        stroke-dashoffset: 192;
+        animation: dash_682 1.4s linear infinite;
+    }
+
+    @keyframes dash_682 {
+        72.5% {
+            opacity: 0;
+        }
+
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+</style>
+
+<!-- Script JavaScript -->
+<script>
+  document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      // Mostrar el loader y el overlay
+      const loaderOverlay = document.getElementById('loaderOverlay');
+      loaderOverlay.style.display = 'flex'; // Mostrar el overlay
+
+      const formData = new FormData();
+      const fileInput = document.querySelector('input[name="file"]');
+      formData.append('file', fileInput.files[0]);
+
+      try {
+          const response = await fetch('/medical-report/', {
+              method: 'POST',
+              body: formData
+          });
+
+          if (!response.ok) throw new Error('Error al procesar el archivo');
+
+          const data = await response.json();
+
+          // Redirige usando la URL proporcionada por el backend
+          window.location.href = data.redirect_url;
+
+      } catch (error) {
+          alert('Ocurrió un error: ' + error.message);
+      } finally {
+          // Ocultar el loader y el overlay
+          loaderOverlay.style.display = 'none';
+      }
+  });
+</script>
+{% endblock %}
