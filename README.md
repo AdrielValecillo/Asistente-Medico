@@ -66,7 +66,7 @@ El sistema evita que la IA "invente" información, forzándola a basarse únicam
 
 4.  **Generación Aumentada (Generation):**
     - Los chunks recuperados (el contexto) se inyectan en un *prompt* junto con la pregunta original.
-    - Este prompt enriquecido se envía al modelo `gemini-1.5-flash`, con la instrucción de "actuar como un médico y generar un informe basado **exclusivamente** en el contexto proporcionado".
+    - Este prompt enriquecido se envía al modelo `gemini-2.0-flash`, con la instrucción de "actuar como un médico y generar un informe basado **exclusivamente** en el contexto proporcionado".
     - El resultado es una respuesta coherente, precisa y fundamentada únicamente en los documentos del propio usuario.
 
 ---
