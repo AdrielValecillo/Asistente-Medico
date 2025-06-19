@@ -29,7 +29,7 @@ if not GEMINI_API_KEY:
     raise ValueError("GEMINI_API_KEY no está configurada.")
 
 EMBEDDINGS = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GEMINI_API_KEY)
-LLM = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.7, google_api_key=GEMINI_API_KEY)
+LLM = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.7, google_api_key=GEMINI_API_KEY)
 
 def get_vector_store_for_user(user_id: int) -> PGVector:
     """Obtiene o crea el vector store para un usuario específico."""
